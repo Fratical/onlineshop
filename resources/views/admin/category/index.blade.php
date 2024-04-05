@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Category
-                        <a href="">
+                        <a href="{{url('admin/category/create')}}">
                             Create Category
                         </a>
                     </h3>
@@ -33,7 +33,9 @@
                                     <td>{{$item->id}}</td>
                                     <td>{{$item->name}}</td>
                                     <td>{{$item->slug}}</td>
-                                    <td>{{$item->image}}</td>
+                                    <td>
+                                        <img src="{{asset($item->image)}}" height="100px" width="100px" alt="image">
+                                    </td>
                                     <td>{{$item->status}}</td>
                                     <td></td>
                                     <td>{{$item->created_at}}</td>

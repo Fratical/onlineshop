@@ -32,6 +32,8 @@ Route::prefix('admin')->group(function () {
        Route::get('/category', 'index');
        Route::get('/category/create','create');
        Route::post('category','store');
+       Route::get('category/edit/{id}','edit');
+       Route::put('category/{id}', 'update');
    });
 
 });

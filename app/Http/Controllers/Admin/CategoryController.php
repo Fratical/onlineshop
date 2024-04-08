@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -21,15 +22,12 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $validateData = $request->validate([
             "name" => "required|max:50|unique:categories",
             "slug" => "required|max:50|unique:categories",
             "status" => "nullable",
             "image" => "required|image|mimes:jpg,png,svg",
         ]);
-
-
 
         if ($request->hasFile('image'))
         {
@@ -52,9 +50,48 @@ class CategoryController extends Controller
         return redirect('admin/category')->with('message','Category Created Successfully');
 
 
+    }
 
+    public function edit($id)
+    {
+        $category = Category::find($id);
+//        dd($category);
+        return view('admin.category.edit', compact('category'));
+    }
 
+    public function update(Request $request, $id)
+    {
+        dd($request->all());
 
+        $category = Category::find($id);
+
+        $validatedData = $request->validate([
+            "name" => "required|max:50|unique:categories,name," . $category->id,
+            "slug" => "required|max:50|unique:categories,slug," . $category->id,
+            "status" => "nullable",
+            "image" => "nullable|image|mimes:jpg,png,svg",
+        ]);
+
+        if ($request->hasFile('image'))
+        {
+//            use Illuminate\Support\Facades\File;
+            if (File::exists($category->image)){
+                File::delete($category->image);
+            }
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext; //147785.png
+            $file->move('uploads/category/', $filename);
+            $validatedData['image'] = 'uploads/category/'. $filename;
+        }
+
+        $validatedData['status'] = $request->status == true ? '1':'0';
+
+        dd($validatedData['status']);
+
+        $category->update($validatedData);
+
+        return redirect('admin/category')->with('message','Category updated successfully');
     }
 
 

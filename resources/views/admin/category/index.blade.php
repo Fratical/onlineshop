@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Category
-                        <a href="{{url('admin/category/create')}}">
+                        <a href="{{url('admin/category/create')}}" class="btn btn-primary btn-sm text-white float-end">
                             Create Category
                         </a>
                     </h3>
@@ -37,7 +37,11 @@
                                         <img src="{{asset($item->image)}}" height="100px" width="100px" alt="image">
                                     </td>
                                     <td>{{$item->status}}</td>
-                                    <td></td>
+                                    <td>
+                                        <a href="{{url('admin/category/edit/' . $item->id)}}" class="btn btn-success btn-sm">
+                                            EDIT
+                                        </a>
+                                    </td>
                                     <td>{{$item->created_at}}</td>
                                     <td>{{$item->updated_at}}</td>
                                 </tr>

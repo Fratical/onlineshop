@@ -61,8 +61,6 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
-
         $category = Category::find($id);
 
         $validatedData = $request->validate([
@@ -86,8 +84,6 @@ class CategoryController extends Controller
         }
 
         $validatedData['status'] = $request->status == true ? '1':'0';
-
-        dd($validatedData['status']);
 
         $category->update($validatedData);
 

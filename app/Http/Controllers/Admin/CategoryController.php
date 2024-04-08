@@ -29,6 +29,8 @@ class CategoryController extends Controller
             "image" => "required|image|mimes:jpg,png,svg",
         ]);
 
+
+
         if ($request->hasFile('image'))
         {
             $file = $request->file('image');
